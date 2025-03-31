@@ -1,0 +1,44 @@
+{
+  "navigation": {
+    "Dashboards": [
+      {
+        "name": "Home",
+        "icon": "tabler-smart-home",
+        "url": "/home"
+      }
+    ],
+    "Profile": [
+      {
+        "name": "Profile",
+        "icon": "tabler-user",
+        "url": "/profile"
+      }
+    ],
+    "Settings": [
+      {
+        "name": "Settings",
+        "icon": "tabler-settings",
+        "url": "/settings"
+      }
+    ]
+  },
+  "suggestions": {
+    "Popular Searches": [
+      {
+        "name": "Home",
+        "icon": "tabler-smart-home",
+        "url": "/home"
+      },
+      {
+        "name": "Profile",
+        "icon": "tabler-user",
+        "url": "/profile"
+      },
+      {
+        "name": "Settings",
+        "icon": "tabler-settings",
+        "url": "/settings"
+      }
+    ]
+  }
+}

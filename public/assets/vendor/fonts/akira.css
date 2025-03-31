@@ -1,0 +1,13 @@
+.akira {
+    font-family: 'Akira', "Public Sans", -apple-system, blinkmacsystemfont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-style: normal;
+}
+
+/* Webfont: Minecraft Seven V2 */
+@font-face {
+    font-family: 'Akira';
+    src: url('./akira/akira.woff') format('woff');
+    font-style: normal;
+    font-weight: bolder;
+    text-rendering: optimizeLegibility;
+}

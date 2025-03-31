@@ -1,0 +1,36 @@
+.minecraft-seven-v2 {
+    font-family: 'MinecraftSeven-v2', "Public Sans", -apple-system, blinkmacsystemfont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-style: normal;
+}
+
+.minecraft-ten-v2 {
+    font-family: 'MinecraftTen-v2', "Public Sans", -apple-system, blinkmacsystemfont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-style: normal;
+}
+
+/* Webfont: Minecraft Seven V2 */
+@font-face {
+    font-family: 'MinecraftSeven-v2';
+    src: url('./minecraft/MinecraftSeven-v2.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: MinecraftTen */
+@font-face {
+    font-family: 'MinecraftTen-v2';
+    src: url('./minecraft/MinecraftTen-v2.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: MinecraftTen */
+@font-face {
+    font-family: 'MinecraftTen';
+    src: url('./minecraft/MinecraftTen.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
