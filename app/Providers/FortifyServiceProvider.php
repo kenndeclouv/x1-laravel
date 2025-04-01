@@ -24,10 +24,19 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        //     public function toResponse($request)
+        //     {
+        //         return redirect()->route('home')->with('success', 'Welcome home ' . Auth::user()->name . '!');
+        //     }
+        // });
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                return redirect()->route('home')->with('success', 'Welcome home ' . Auth::user()->name . '!');
+                // cek apakah ada URL tujuan di session, kalo gak ada default ke 'home'
+                $redirectUrl = session()->pull('login_redirect', route('home'));
+
+                return redirect()->to($redirectUrl)->with('success', 'Welcome home ' . Auth::user()->name . '!');
             }
         });
     }
@@ -62,7 +71,11 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
 
-        Fortify::loginView(function () {
+        Fortify::loginView(function (Request $request) {
+            if ($request->has('url')) {
+                session(['login_redirect' => $request->query('url')]);
+            }
+
             return view('auth.login');
         });
     }

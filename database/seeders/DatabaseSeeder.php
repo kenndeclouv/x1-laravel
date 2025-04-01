@@ -15,13 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            RoleSeeder::class,
-            PermissionSeeder::class,
-            ItemSeeder::class,
-            StaffSeeder::class,
-        ]);
-
         $superadmin = User::create([
             'name' => 'superadmin',
             'email' => 'superadmin@gmail.com',
@@ -38,6 +31,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@gmail.com',
             'password' => 'user',
+        ]);
+
+        $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class,
+            ItemSeeder::class,
+            StaffSeeder::class,
         ]);
 
         $superadmin->roles()->attach(1);

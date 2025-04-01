@@ -1,5 +1,5 @@
 @extends('landing.components.layouts.master')
-@section('title', 'Home')
+@section('title', 'Rules')
 @section('page-script')
     <script>
         const memberCount = document.getElementById('member-count');

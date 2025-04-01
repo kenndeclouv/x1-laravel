@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class LandingPageController extends Controller
 {
@@ -21,6 +22,14 @@ class LandingPageController extends Controller
     {
         $items = Item::all();
         return view('landing.store', compact('items'));
+    }
+    public function checkout(Item $item)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('url', '/checkout/' . $item->id);
+        }
+        return view('landing.checkout', compact('item'));
     }
     public function staff()
     {

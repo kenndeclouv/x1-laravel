@@ -19,6 +19,11 @@ return new class extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('item_id')->nullable()->after('password')->constrained('items')->onDeleteNull();
+            $table->timestamp('item_purchased_at')->nullable();
+        });
     }
 
     /**

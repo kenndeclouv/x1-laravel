@@ -19,7 +19,7 @@ class QrisController extends Controller
     public function createQris(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1000',
+            'item_id' => 'required|string|exists:items,id',
         ]);
 
         $orderId = 'X1MC-' . time(); // contoh invoice id

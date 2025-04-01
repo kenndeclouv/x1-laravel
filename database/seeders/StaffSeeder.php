@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Staff;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class StaffSeeder extends Seeder
 {
@@ -15,9 +17,15 @@ class StaffSeeder extends Seeder
     {
         $staffs = [
             [
+                'name' => 'Vinn',
+                'photo' => 'vinn.jpg',
+                'role' => 'Founder',
+            ],
+            [
                 'name' => 'PixyPAYCRAFT',
                 'photo' => 'pixypaycraft.jpg',
-                'role' => 'X1 Founder',
+                'role' => 'Developer',
+                'link' => 'https://instagram.com/pxclvr',
             ],
             [
                 'name' => 'kenndeclouv',
@@ -26,36 +34,64 @@ class StaffSeeder extends Seeder
                 'link' => 'https://kenndeclouv.my.id',
             ],
             [
-                'name' => 'ItsukaArata',
-                'photo' => 'itsukaarata.png',
-                // 'role' => 'admin',
+                'name' => 'AkangHaise',
+                'photo' => 'akanghaise.png',
+                'role' => 'Inspector',
+                'link' => 'https://instagram.com/maktanul',
             ],
             [
-                'name' => 'Vinn',
-                'photo' => 'vinn.jpg',
-                // 'role' => 'admin',
+                'name' => 'Ririink',
+                'photo' => 'ririink.png',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/vnist_sir',
             ],
             [
-                'name' => 'Rin',
-                'photo' => 'rin.png',
-                // 'role' => 'admin',
-            ],
-            [
-                'name' => 'Rinne',
-                'photo' => 'rinne.png',
-                // 'role' => 'admin',
+                'name' => 'Ratma_hikaru',
+                'photo' => 'ratma_hikaru.png',
+                'role' => 'Helper',
+                'link' => 'https://tiktok.com/@rinnechhi_1',
             ],
             [
                 'name' => 'Rannkanaeru',
                 'photo' => 'rannkanaeru.jpg',
-                // 'role' => 'admin',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/rannkanaeru',
             ],
-
-
+            [
+                'name' => 'JumHzx',
+                'photo' => 'jumhzx.png',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/jumhzx',
+            ],
+            [
+                'name' => 'Litte_Craft6113',
+                'photo' => 'litte_craft6113.jpg',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/litte_craft6113',
+            ],
+            [
+                'name' => 'Corvusion4249',
+                'photo' => 'corvusion4249.png',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/corpsiyon',
+            ],
+            [
+                'name' => 'Finnlapox',
+                'photo' => 'finnlapox.jpg',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/finnhxh',
+            ],
         ];
 
         foreach ($staffs as $staff) {
             Staff::firstOrCreate($staff);
+            $user = User::firstOrCreate([
+                'name' => $staff['name'],
+                'email' => Str::lower($staff['name']) . '@x1.com',
+                'password' => Str::upper($staff['name']),
+            ]);
+
+            $user->roles()->attach(3);
         }
     }
 }

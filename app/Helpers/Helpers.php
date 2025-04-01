@@ -8,3 +8,9 @@ if (!function_exists('hasPermission')) {
         return Auth::user()->permissions()->where('code', $permission)->exists();
     }
 }
+if (!function_exists('formatDate')) {
+    function formatDate($date, $format = 'd F Y')
+    {
+        return Carbon\Carbon::parse($date)->format($format);
+    }
+}

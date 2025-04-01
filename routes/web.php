@@ -14,6 +14,11 @@ Route::name('landing.')->group(function () {
     Route::get('/', [LandingPageController::class, 'index'])->name('index');
     Route::get('/rules', [LandingPageController::class, 'rules'])->name('rules');
     Route::get('/store', [LandingPageController::class, 'store'])->name('store');
+    Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function () {
+        Route::get('{item}', [LandingPageController::class, 'checkout'])->name('index');
+        Route::post('{item}', [LandingPageController::class, 'checkoutStore'])->name('store');
+        Route::post('gift/{item}', [LandingPageController::class, 'checkoutGift'])->name('gift');
+    });
     Route::get('/staff', [LandingPageController::class, 'staff'])->name('staff');
 });
 

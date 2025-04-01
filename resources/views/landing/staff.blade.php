@@ -1,26 +1,12 @@
 @extends('landing.components.layouts.master')
-@section('title', 'Home')
-@section('page-script')
-    <script>
-        const memberCount = document.getElementById('member-count');
-        const memberCountWrapper = document.getElementById('member-count-wrapper');
-        fetch('/api/discord-members')
-            .then(response => response.json())
-            .then(data => {
-                memberCount.textContent = data.online_members.toString() + "/" + data.total_members.toString();
-            }).catch(error => {
-                memberCountWrapper.textContent = 'Error fetching member count';
-                memberCountWrapper.classList = 'text-danger';
-            });
-    </script>
-@endsection
+@section('title', 'Our Awesome Staff')
 
 @section('content')
     <!-- Sections:Start -->
     <div data-bs-spy="scroll" class="scrollspy-example">
         <section id="staff-section"
             style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/staff-bg.png') }}) lightgray 50% / cover no-repeat; padding-top: 100px;">
-            <div class="container">
+            <div class="container pb-6">
                 <div class="card" style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                     <div class="card-body p-0 pt-6 position-relative">
                         <img src="{{ asset('assets/img/landing/MC-About_Key-Art_Survive_the_Night_600x800.png') }}"
@@ -41,7 +27,7 @@
                                 <div class="rounded-2 text-center mb-4">
                                     <img class="img-fluid rounded-2"
                                         src="{{ asset('assets/img/landing/staff/' . $staff->photo) }}"
-                                        alt="{{ $staff->name }}" style="max-width: 256px;">
+                                        alt="{{ $staff->name }}" style="width: clamp(128px, 100%, 256px);">
                                 </div>
                                 <div class="card-body pt-2 pb-0 text-center">
                                     <span class="badge bg-label-primary">{{ $staff->role }}</span>

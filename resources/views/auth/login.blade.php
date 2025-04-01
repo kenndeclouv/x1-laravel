@@ -34,6 +34,7 @@
 
                         <form id="formAuthentication" class="mb-4" action="{{ route('login.store') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="url" value="{{ request('url') }}">
                             <div class="mb-6 form-control-validation">
                                 <label for="email" class="form-label">Email </label>
                                 <input type="text" class="form-control" id="email" name="email"
