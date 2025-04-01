@@ -45,10 +45,10 @@ class DatabaseSeeder extends Seeder
         $user->roles()->attach(3);
 
         AppSetting::create([
-            'app_color' => '#7367f0',
-            'app_theme' => 'light',
-            'app_semidark' => 1,
-            'app_skin' => 0
+            'app_color' => env('APP_COLOR', '#7367f0'),
+            'app_theme' => env('APP_THEME', 'light'),
+            'app_semidark' => env('APP_SEMIDARK', 1),
+            'app_skin' => env('APP_SKIN', 0)
         ]);
 
         UserPermission::create([

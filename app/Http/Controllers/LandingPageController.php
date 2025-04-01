@@ -38,8 +38,8 @@ class LandingPageController extends Controller
     }
     public function getGuildMembers()
     {
-        $guildId = '1314236534484111370'; // Ganti dengan ID server Anda
-        $botToken = 'MTMxNjYyMjcxMjA0MjQyMjM5Mg.Gg731W.1v81B_suK6QrSd7VXcyBrsN24x_eWsdncc62sY'; // Ganti dengan token bot Anda
+        $guildId = env('DISCORD_GUILD_ID'); // Ganti dengan ID server Anda
+        $botToken = env('DISCORD_BOT_TOKEN'); // Ganti dengan token bot Anda
 
         $client = new Client();
 
