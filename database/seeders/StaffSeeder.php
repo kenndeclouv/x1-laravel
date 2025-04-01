@@ -64,8 +64,8 @@ class StaffSeeder extends Seeder
                 'link' => 'https://instagram.com/jumhzx',
             ],
             [
-                'name' => 'Litte_Craft6113',
-                'photo' => 'litte_craft6113.jpg',
+                'name' => 'Little_Craft6113',
+                'photo' => 'little_craft6113.png',
                 'role' => 'Helper',
                 'link' => 'https://instagram.com/litte_craft6113',
             ],
@@ -77,7 +77,7 @@ class StaffSeeder extends Seeder
             ],
             [
                 'name' => 'Finnlapox',
-                'photo' => 'finnlapox.jpg',
+                'photo' => 'finnlapox.png',
                 'role' => 'Moderator',
                 'link' => 'https://instagram.com/finnhxh',
             ],
