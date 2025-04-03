@@ -17,8 +17,10 @@
         "laravel/pulse": "^1.4",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "midtrans/midtrans-php": "^2.6",
         "symfony/css-selector": "^7.2",
-        "symfony/dom-crawler": "^7.2"
+        "symfony/dom-crawler": "^7.2",
+        "textalk/websocket": "^1.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
@@ -37,7 +39,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/Helpers.php"
+            "app/Helpers/Helpers.php",
+            "app/Helpers/WebsocketHelper.php"
         ]
     },
     "autoload-dev": {

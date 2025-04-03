@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\LogViewerController;
@@ -9,6 +10,21 @@ use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\EnvController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\RedeemController;
+
+// Route::get("wa-message/{message}", function($message) {
+Route::get("wa-message", function () {
+    $message = "> 🔰 *IMMORTAL RANK PURCHASED*  
+> ------------------------------------------
+> 👤 User        : *WHO*  
+> 📦 Item        : *IMMORTAL* RANK
+> 🕒 Purchased at: 27 Mei 2006 16:56  
+> 💳 Status      : *PAID*  
+> ------------------------------------------  
+> ⚠️ PENDING TO BE ACTIVATED  ";
+    sendWhatsApp($message);
+    return response()->json(["message" => $message]);
+});
 
 Route::name('landing.')->group(function () {
     Route::get('/', [LandingPageController::class, 'index'])->name('index');
@@ -16,10 +32,18 @@ Route::name('landing.')->group(function () {
     Route::get('/store', [LandingPageController::class, 'store'])->name('store');
     Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function () {
         Route::get('{item}', [LandingPageController::class, 'checkout'])->name('index');
-        Route::post('{item}', [LandingPageController::class, 'checkoutStore'])->name('store');
-        Route::post('gift/{item}', [LandingPageController::class, 'checkoutGift'])->name('gift');
+        Route::post('{item}', [CheckoutController::class, 'storeTransaction'])->name('store-transaction');
+
+        Route::get('payment/{transaction}', [CheckoutController::class, 'payment'])->name('payment');
+        Route::get('payment-success/{transaction}', [CheckoutController::class, 'paymentSuccess'])->name('payment-success');
+    });
+
+    Route::group(['prefix' => 'redeem', 'as' => 'redeem.'], function () {
+        Route::get('/', [RedeemController::class, 'index'])->name('index');
+        Route::post('/', [RedeemController::class, 'redeem'])->name('redeem')->middleware('throttle:5,1');
     });
     Route::get('/staff', [LandingPageController::class, 'staff'])->name('staff');
+    Route::get('/thanks', [LandingPageController::class, 'thanks'])->name('thanks');
 });
 
 Route::group(['middleware' => ['auth']], function () {

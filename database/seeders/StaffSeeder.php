@@ -28,7 +28,7 @@ class StaffSeeder extends Seeder
                 'link' => 'https://instagram.com/pxclvr',
             ],
             [
-                'name' => 'kenndeclouv',
+                'name' => 'kenndeclouv1229',
                 'photo' => 'kenndeclouv.png',
                 'role' => 'Developer',
                 'link' => 'https://kenndeclouv.my.id',

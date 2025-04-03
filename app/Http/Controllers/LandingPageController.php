@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\WebSocketHelper;
 use App\Models\Item;
 use App\Models\Staff;
-use Illuminate\Http\Request;
+use WebSocket\Client as WebSocketClient;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,8 +21,9 @@ class LandingPageController extends Controller
     }
     public function store()
     {
-        $items = Item::all();
-        return view('landing.store', compact('items'));
+        $ranks = Item::where('type', 'rank')->get();
+        $moneys = Item::where('type', 'money')->get();
+        return view('landing.store', compact('ranks', 'moneys'));
     }
     public function checkout(Item $item)
     {
@@ -35,6 +37,11 @@ class LandingPageController extends Controller
     {
         $staffs = Staff::all();
         return view('landing.staff', compact('staffs'));
+    }
+
+    public function thanks()
+    {
+        return view('landing.thanks');
     }
     public function getGuildMembers()
     {
@@ -70,5 +77,44 @@ class LandingPageController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function getMinecraftServerData()
+    {
+        $server = env('MINECRAFT_SERVER');
+
+        $client = new Client();
+
+        try {
+            $response = $client->get("https://api.mcsrvstat.us/1/" . $server);
+
+            $data = json_decode($response->getBody(), true);
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getServerData()
+    {
+        $server = env('SERVER_UUID');
+
+        $client = new Client();
+
+        try {
+            $response = $client->get("https://panel.nebulasrv.my.id/api/client/servers/" . $server, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . env('SERVER_API_KEY'),
+                ],
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function connectToWebSocket($command)
+    {
+        $response = WebSocketHelper::connectToWebSocket($command);
+        return response()->json($response);
     }
 }

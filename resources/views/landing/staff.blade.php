@@ -5,12 +5,12 @@
     <!-- Sections:Start -->
     <div data-bs-spy="scroll" class="scrollspy-example">
         <section id="staff-section"
-            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/staff-bg.png') }}) lightgray 50% / cover no-repeat; padding-top: 100px;">
+            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/hero-3.png') }}) lightgray 50% / cover no-repeat; padding-top: 100px;">
             <div class="container pb-6">
                 <div class="card" style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                     <div class="card-body p-0 pt-6 position-relative">
-                        <img src="{{ asset('assets/img/landing/MC-About_Key-Art_Survive_the_Night_600x800.png') }}"
-                            alt="" class="position-absolute top-0 left-0" style="max-width: 180px; z-index: 1;">
+                        <img src="{{ asset('assets/img/landing/staff-hero.png') }}"
+                            alt="" class="position-absolute top-0 right-0" style="max-width: 290px;">
                         {{-- <img src="{{ asset('assets/img/landing/MC-About_Key-Art_Gather_Resources_600x800.png') }}"
                             alt="" class="position-absolute bottom-0 right-0" style="max-width: 180px; z-index: 1;"> --}}
                         <div class="text-center py-5 position-relative z-10">

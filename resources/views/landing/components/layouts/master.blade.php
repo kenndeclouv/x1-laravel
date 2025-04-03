@@ -40,6 +40,7 @@
     <script src="{{ asset('assets/js/front-main.js') }}"></script>
     <!-- Page JS -->
     @yield('page-script')
+    @include('components.alert')
 </body>
 
 </html>

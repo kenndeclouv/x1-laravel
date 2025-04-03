@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
-            $table->integer('period')->default(30);
+            $table->integer('period')->nullable();
             $table->text('description');
+            $table->enum('type', ['rank', 'money'])->default('rank');
+            $table->string("code")->nullable();
             $table->timestamps();
         });
 

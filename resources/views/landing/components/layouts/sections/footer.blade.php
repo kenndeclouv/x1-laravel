@@ -1,6 +1,6 @@
 <!-- Footer: Start -->
 <footer class="landing-footer footer-text"
-    style="background: top linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 1) 100%), url({{ asset('assets/img/landing/b24bb22c50be84cb9a35e82eece0f5d9.jpg') }}) lightgray 50% / cover no-repeat; padding-top:100px">
+    style="background: top linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 1) 100%), url({{ asset('assets/img/landing/hero-11.png') }}) lightgray 50% / cover no-repeat; padding-top:100px">
     <div class="footer-top position-relative overflow-hidden z-1">
         <div class="container">
             <div class="row gx-0 gy-6 g-lg-10">
@@ -29,7 +29,7 @@
                                 href="{{ request()->is('rules') ? '#' : route('landing.rules') }}">Rules</a>
                         </li>
                         <li class="mb-4">
-                            <a class="footer-link {{ request()->is('store') ? 'minecraft-ten-v2' : '' }}"
+                            <a class="footer-link {{ request()->is('store') || request()->is('checkout/*') ? 'minecraft-ten-v2' : '' }}"
                                 href="{{ request()->is('store') ? '#' : route('landing.store') }}">Store</a>
                         </li>
                         <li class="mb-4">
@@ -60,7 +60,7 @@
                                 class="footer-link">YouTube</a>
                         </li>
                         <li class="mb-4">
-                            <a href="https://discord.gg/x1community" target="_blank" class="footer-link">Discord</a>
+                            <a href="https://discord.gg/3gvZdYM2ek" target="_blank" class="footer-link">Discord</a>
                         </li>
                     </ul>
                 </div>

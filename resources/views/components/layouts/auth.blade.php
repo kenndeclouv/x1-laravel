@@ -61,7 +61,8 @@
 
 </head>
 
-<body class="minecraft-seven-v2">
+<body class="minecraft-seven-v2" style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%),
+    url({{ asset("assets/img/landing/" . ($bg ?? 'hero-1.png')) }}) lightgray 50% / cover no-repeat;">
     <!-- Content -->
 
     @yield('content')
@@ -102,6 +103,7 @@
 
     <!-- Page JS -->
     <script src="assets/js/pages-auth.js"></script>
+    @include('components.alert')
 </body>
 
 </html>

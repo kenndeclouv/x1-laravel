@@ -46,7 +46,7 @@
                             href="{{ request()->is('rules') ? '#' : route('landing.rules') }}">Rules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('store') || request()->is('checkout/*') ? 'minecraft-ten-v2' : '' }}"
+                        <a class="nav-link {{ request()->is('store') || request()->is('checkout*') || request()->is('redeem*') ? 'minecraft-ten-v2' : '' }}"
                             href="{{ request()->is('store') ? '#' : route('landing.store') }}">Store</a>
                     </li>
                     <li class="nav-item">

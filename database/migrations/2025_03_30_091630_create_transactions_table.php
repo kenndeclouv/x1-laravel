@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('order_id');
             $table->foreignId('user_id')->constrained('users')->onDeleteCascade();
             $table->foreignId('item_id')->constrained('items')->onDeleteCascade();
-            $table->enum('status', ['pending', 'paid'])->default('pending');
+            $table->enum('status', ['pending', 'paid', 'failed'])->default('pending');
+            $table->string('snap_token')->nullable();
+            $table->boolean('is_gift')->default(0);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

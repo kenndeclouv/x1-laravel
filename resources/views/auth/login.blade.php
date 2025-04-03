@@ -1,15 +1,14 @@
 @extends('components.layouts.auth')
 
 @section('title', 'Login')
+@php $bg="hero-2.png" @endphp
 
 @section('content')
-    <img src="{{ asset('assets/img/landing/wallpaper_legends_cover_1920x1080.png') }}" alt=""
-        class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="filter: brightness(0.5)">
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-6">
                 <!-- Login -->
-                <div class="card" style="background-color: rgba(var(--bs-body-bg-rgb), 0.7); backdrop-filter: blur(10px);">
+                <div class="card" style="background-color: rgba(var(--bs-body-bg-rgb), 0.8); backdrop-filter: blur(10px);">
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-6">
@@ -38,14 +37,14 @@
                             <div class="mb-6 form-control-validation">
                                 <label for="email" class="form-label">Email </label>
                                 <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" autofocus value="superadmin@gmail.com" />
+                                    placeholder="Enter your email" autofocus value="{{ old('email') }}" />
                             </div>
                             <div class="mb-6 form-password-toggle form-control-validation">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" value="superadmin" />
+                                        aria-describedby="password" value="" />
                                     <span class="input-group-text cursor-pointer"><i
                                             class="icon-base ti tabler-eye-off"></i></span>
                                 </div>
@@ -68,7 +67,11 @@
                                 <div class="divider-text">or</div>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('register') }}">Join now!</a>
+                                @if(request('url'))
+                                    <a href="{{ route('register', ['url' => request('url')]) }}">Join now!</a>
+                                @else
+                                    <a href="{{ route('register') }}">Join now!</a>
+                                @endif
                             </div>
                         </form>
                     </div>

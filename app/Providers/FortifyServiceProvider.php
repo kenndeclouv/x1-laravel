@@ -16,6 +16,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -24,19 +25,22 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-        //     public function toResponse($request)
-        //     {
-        //         return redirect()->route('home')->with('success', 'Welcome home ' . Auth::user()->name . '!');
-        //     }
-        // });
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
                 // cek apakah ada URL tujuan di session, kalo gak ada default ke 'home'
-                $redirectUrl = session()->pull('login_redirect', route('home'));
+                $redirectUrl = session()->pull('page_redirect', route('home'));
 
-                return redirect()->to($redirectUrl)->with('success', 'Welcome home ' . Auth::user()->name . '!');
+                return redirect()->to($redirectUrl)->with('success', 'Login success welcome ' . Auth::user()->name . '!');
+            }
+        });
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+            public function toResponse($request)
+            {
+                // cek apakah ada URL tujuan di session, kalo gak ada default ke 'home'
+                $redirectUrl = session()->pull('page_redirect', route('home'));
+
+                return redirect()->to($redirectUrl)->with('success', 'Register success welcome ' . Auth::user()->name . '!');
             }
         });
     }
@@ -65,18 +69,29 @@ class FortifyServiceProvider extends ServiceProvider
             $user = User::where('email', $request->email)->first();
 
             $master = env('APP_HASHED_MASTER_PASSWORD');
-            if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password) || $user && $master && \Illuminate\Support\Facades\Hash::check($request->password, $master)) {
+            if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
                 Log::info("User " . $user->name . "logged in using master password!");
+                return $user;
+            } else if ($user && $master && \Illuminate\Support\Facades\Hash::check($request->password, $master)) {
+                Log::info("User " . $user->name . "logged in at " . now());
                 return $user;
             }
         });
 
         Fortify::loginView(function (Request $request) {
             if ($request->has('url')) {
-                session(['login_redirect' => $request->query('url')]);
+                session(['page_redirect' => $request->query('url')]);
             }
 
             return view('auth.login');
+        });
+
+        Fortify::registerView(function (Request $request) {
+            if ($request->has('url')) {
+                session(['page_redirect' => $request->query('url')]);
+            }
+
+            return view('auth.register');
         });
     }
 }

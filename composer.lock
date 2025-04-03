@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f1c19920d52dd3cbf445b460c1bfc18",
+    "content-hash": "cd2a855aa5e3e5b8c635cb32911505b7",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2582,6 +2582,67 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.9.0"
             },
             "time": "2024-03-31T07:05:07+00:00"
+        },
+        {
+            "name": "midtrans/midtrans-php",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Midtrans/midtrans-php.git",
+                "reference": "8ed7fc58ff1ababe675da17acf8233f4028eb3be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/8ed7fc58ff1ababe675da17acf8233f4028eb3be",
+                "reference": "8ed7fc58ff1ababe675da17acf8233f4028eb3be",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-openssl": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7.*",
+                "psy/psysh": "0.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SnapBi\\": "SnapBi/",
+                    "Midtrans\\": "Midtrans/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andri Setiawan",
+                    "email": "andri.setiawan@veritrans.co.id"
+                },
+                {
+                    "name": "Alvin Litani",
+                    "email": "alvin.litani@veritrans.co.id"
+                },
+                {
+                    "name": "Ismail Faruqi",
+                    "email": "ismail.faruqi@veritrans.co.id"
+                },
+                {
+                    "name": "Muhammad Fauzi Masykur",
+                    "email": "muhammad.masykur@gojek.com"
+                }
+            ],
+            "description": "PHP Wrapper for Midtrans Payment API.",
+            "homepage": "https://midtrans.com",
+            "support": {
+                "issues": "https://github.com/Midtrans/midtrans-php/issues",
+                "source": "https://github.com/Midtrans/midtrans-php/tree/v2.6.2"
+            },
+            "time": "2025-03-18T06:30:17+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6276,6 +6337,55 @@
                 }
             ],
             "time": "2025-01-17T11:39:41+00:00"
+        },
+        {
+            "name": "textalk/websocket",
+            "version": "1.5.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Textalk/websocket-php.git",
+                "reference": "d05dbaa97500176447ffb1f1800573f23085ab13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Textalk/websocket-php/zipball/d05dbaa97500176447ffb1f1800573f23085ab13",
+                "reference": "d05dbaa97500176447ffb1f1800573f23085ab13",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 | ^8.0",
+                "psr/log": "^1 | ^2 | ^3"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WebSocket\\": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Liljegren"
+                },
+                {
+                    "name": "Sören Jensen",
+                    "email": "soren@abicart.se"
+                }
+            ],
+            "description": "WebSocket client and server",
+            "support": {
+                "issues": "https://github.com/Textalk/websocket-php/issues",
+                "source": "https://github.com/Textalk/websocket-php/tree/1.5.8"
+            },
+            "time": "2022-04-26T06:28:24+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

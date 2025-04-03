@@ -9,41 +9,17 @@
     <!-- Sections:Start -->
     <div data-bs-spy="scroll" class="scrollspy-example">
         <section
-            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/wallpaper_minecraft_trickytrials_1920x1080.png') }}) lightgray 50% / cover no-repeat; padding-top: 100px;">
+            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/hero-8.png') }}) lightgray 50% / cover no-repeat; padding-top: 100px;">
             <div class="container pb-6">
                 <div class="card" style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                     <div class="card-body">
                         <div class="row">
-                            <!-- Cart left -->
                             <div class="col-xl-8 mb-6 mb-xl-0">
-                                <!-- Offer alert -->
-                                {{-- <div class="alert alert-success mb-4" role="alert">
-                                    <div class="d-flex gap-4">
-                                        <div class="alert-icon flex-shrink-0 rounded me-0">
-                                            <i class="ti ti-percentage"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h5 class="alert-heading mb-1">Available Offers</h5>
-                                            <ul class="list-unstyled mb-0">
-                                                <li> - 10% Instant Discount on Bank of America Corp Bank Debit
-                                                    and
-                                                    Credit cards</li>
-                                                <li> - 25% Cashback Voucher of up to $60 on first ever PayPal
-                                                    transaction. TCA</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn-close btn-pinned" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                </div> --}}
-
-                                <!-- Shopping bag -->
-                                {{-- <h5>My Shopping Bag (2 Items)</h5> --}}
                                 <ul class="list-group mb-4">
                                     <li class="list-group-item p-6">
                                         <div class="d-flex gap-4">
                                             <div class="flex-shrink-0 d-flex align-items-center">
-                                                <img src="{{ asset('assets/img/landing/rank/' . $item->id . '.png') }}"
+                                                <img src="{{ asset('assets/img/landing/item/' . $item->id . '.png') }}"
                                                     alt="{{ $item->name }}" class="w-px-100">
                                             </div>
                                             <div class="flex-grow-1">
@@ -84,17 +60,16 @@
                                     </dl>
                                 </div>
                                 <div class="d-grid">
-                                    <form action="{{ route('landing.checkout.store', $item->id) }}" method="post">
+                                    <form action="{{ route('landing.checkout.store-transaction', $item->id) }}" method="POST">
                                         @csrf
-                                        <button class="btn btn-primary w-100">Checkout</button>
+                                        <input type="hidden" name="is_gift" value="0">
+                                        <button type="submit" class="btn btn-primary w-100">Checkout</button>
                                     </form>
                                     <div class="divider">
                                         <div class="divider-text">or</div>
                                     </div>
-                                    <form action="{{ route('landing.checkout.gift', $item->id) }}" method="post">
-                                        @csrf
-                                        <button class="btn btn-info w-100">Gift to Another</button>
-                                    </form>
+                                    <button type="button" class="btn btn-info w-100" data-bs-toggle="modal"
+                                        data-bs-target="#giftModal">Gift to Another</button>
                                 </div>
                             </div>
                         </div>
@@ -102,5 +77,30 @@
                 </div>
             </div>
         </section>
+    </div>
+    <div class="modal fade" id="giftModal" tabindex="-1" aria-labelledby="giftModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="giftModalLabel">Gift to Another</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('landing.checkout.store-transaction', $item->id) }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        </div>
+                        {{-- <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="hideName" name="hideName">
+                            <label class="form-check-label" for="hideName">Hide your name</label>
+                        </div> --}}
+                        <input type="hidden" name="is_gift" value="1">
+                        <button type="submit" class="btn btn-primary">Send Gift</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
