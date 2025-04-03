@@ -85,7 +85,7 @@ class LandingPageController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->get("https://api.mcsrvstat.us/1/" . $server);
+            $response = $client->get("https://api.mcstatus.io/v2/status/java/" . $server);
 
             $data = json_decode($response->getBody(), true);
             return response()->json($data);

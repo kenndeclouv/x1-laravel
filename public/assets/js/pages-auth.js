@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
               stringLength: {
                 min: 4,
                 message: 'Username must be more than 6 characters'
-              }
+              }              
             }
           },
           email: {
