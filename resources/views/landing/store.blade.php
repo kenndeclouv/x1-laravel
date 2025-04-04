@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    <a id="checkout-button" onclick="checkout()" class="btn btn-primary btn-lg"><i
+                                    <a id="checkout-button" onclick="checkout()" class="btn btn-primary btn-lg text-white"><i
                                             class="ti tabler-shopping-cart me-2"></i>
                                         Checkout Now </a>
                                 @else
@@ -234,7 +234,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <a id="checkout-button" onclick="checkout()" class="btn btn-primary btn-lg"><i
+                                <a id="checkout-button" onclick="checkout()" class="btn btn-primary btn-lg text-white"><i
                                         class="ti tabler-shopping-cart me-2"></i>
                                     Checkout Now </a>
                             </div>

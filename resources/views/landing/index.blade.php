@@ -30,8 +30,8 @@
                             <span id="member-count">0/0</span> Online Members <span
                                 class="badge badge-center rounded-pill bg-success my-auto"
                                 style="width: 15px; height: 15px; display: inline-block;"></span></p>
-                        <div class="btn btn-primary btn-lg"><i class="icon-base ti tabler-login scaleX-n1-rtl me-md-1"></i>
-                            Join Now</div>
+                        <a href="{{ Auth::check() ? route('home') : route('register') }}" class="btn btn-primary btn-lg"><i class="icon-base ti tabler-login scaleX-n1-rtl me-md-1"></i>
+                            Join Now</a>
                     </div>
                 </div>
             </div>

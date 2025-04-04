@@ -36,7 +36,8 @@ class CheckoutController extends Controller
         MidtransConfig::$isSanitized = config('midtrans.isSanitized');
         MidtransConfig::$is3ds = config('midtrans.is3ds');
 
-        $orderId = 'X1MCRANK-' . time();
+        $time = time();
+        $orderId = "X1MC{$item->type}-{$time}";
 
         $params = array(
             'transaction_details' => array(
@@ -65,6 +66,10 @@ class CheckoutController extends Controller
 
     public function paymentSuccess(Transaction $transaction)
     {
+        $midtransStatus = $this->checkTransactionStatus($transaction->order_id);
+        if ($midtransStatus !== 'settlement') {
+            return redirect()->route('landing.checkout.payment', $transaction->id)->with('error', 'Pembayaran belum dikonfirmasi.');
+        }
         $transaction->update([
             'status' => 'paid',
         ]);
@@ -132,5 +137,19 @@ class CheckoutController extends Controller
             // return redirect()->route('landing.store')->with('success', "Item purchased successfully! Wait for admin to confirm it :) {$responseMessage}");
             return redirect()->route('landing.store')->with('success', "Item purchased successfully! Wait for admin to confirm it :)");
         }
+    }
+
+    // fungsi buat cek status transaksi ke Midtrans
+    public function checkTransactionStatus($orderId)
+    {
+        $serverKey = config('midtrans.serverKey');
+        $url = "https://api." . (config('midtrans.isProduction') ? '' : 'sandbox.') . "midtrans.com/v2/{$orderId}/status";
+
+        $response = Http::withBasicAuth($serverKey, '')
+            ->get($url)
+            ->json();
+
+        return $response['transaction_status'] ?? 'unknown';
+        // return $response;
     }
 }
