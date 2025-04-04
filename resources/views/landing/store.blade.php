@@ -122,7 +122,7 @@
                                                     style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                                                     <div class="card-body p-0">
                                                         <label class="form-check-label custom-option-content"
-                                                            for="item-rank-{{ $loop->iteration }}">
+                                                            for="item-{{ $rank->id }}">
                                                             <span class="custom-option-body text-start">
                                                                 <p class="card-text text-end"> <span class="h4"><sup>
                                                                             Rp</sup><strong>
@@ -137,11 +137,11 @@
                                                                     <h4> {{ $rank->name }}</h4>
                                                                 </span>
                                                                 <small class="{{ !$loop->first ? 'd-none' : '' }}"
-                                                                    id="item-rank-description-{{ $loop->iteration }}">{{ $rank->description }}</small>
+                                                                    id="item-description-{{ $rank->id }}">{{ $rank->description }}</small>
                                                             </span>
                                                             <input name="item" class="form-check-input" type="radio"
                                                                 value="{{ $rank->id }}"
-                                                                id="item-rank-{{ $loop->iteration }}"
+                                                                id="item-{{ $rank->id }}"
                                                                 @checked($loop->first)>
                                                         </label>
                                                     </div>
@@ -210,7 +210,7 @@
                                                 style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                                                 <div class="card-body p-0">
                                                     <label class="form-check-label custom-option-content"
-                                                        for="item-money-{{ $loop->iteration }}">
+                                                        for="item-{{ $money->id }}">
                                                         <span class="custom-option-body text-start">
                                                             <p class="card-text text-end"> <span class="h4"><sup>
                                                                         Rp</sup><strong>
@@ -223,11 +223,11 @@
                                                                 <h4> {{ $money->name }}</h4>
                                                             </span>
                                                             <small class="d-none"
-                                                                id="item-description-{{ $loop->iteration }}">{{ $money->description }}</small>
+                                                                id="item-description-{{ $money->id }}">{{ $money->description }}</small>
                                                         </span>
                                                         <input name="item" class="form-check-input" type="radio"
                                                             value="{{ $money->id }}"
-                                                            id="item-money-{{ $loop->iteration }}">
+                                                            id="item-{{ $money->id }}">
                                                     </label>
                                                 </div>
                                             </div>
