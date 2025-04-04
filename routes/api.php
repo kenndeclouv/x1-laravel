@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\QrisController;
 use App\Models\AppSetting;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -34,9 +36,10 @@ Route::group(['prefix' => 'server', 'as' => 'server.'], function () {
             ], 500);
         }
 
-        return response()->json([
-            'authResponse' => $response['authResponse'] ?? 'No auth response',
-            'commandResponse' => $response['commandResponse'] ?? 'No command response',
-        ]);
+        // return response()->json([
+        //     'authResponse' => $response['authResponse'] ?? 'No auth response',
+        //     'commandResponse' => $response['commandResponse'] ?? 'No command response',
+        // ]);
+        return response()->json($response);
     })->name('websocket');
 });

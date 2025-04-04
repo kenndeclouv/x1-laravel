@@ -34,6 +34,7 @@ Route::name('landing.')->group(function () {
         Route::get('{item}', [LandingPageController::class, 'checkout'])->name('index');
         Route::post('{item}', [CheckoutController::class, 'storeTransaction'])->name('store-transaction');
 
+        Route::get('snap-token/{transaction}', [CheckoutController::class, 'getSnapToken'])->name('snap-token');
         Route::get('payment/{transaction}', [CheckoutController::class, 'payment'])->name('payment');
         Route::get('payment-success/{transaction}', [CheckoutController::class, 'paymentSuccess'])->name('payment-success');
     });

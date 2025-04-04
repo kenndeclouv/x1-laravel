@@ -7,23 +7,33 @@
     </script>
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {
-            // SnapToken acquired from previous step
-            snap.pay('{{ $transaction->snap_token }}', {
-                // Optional
-                onSuccess: function(result) {
-                    window.location.href = '{{ route('landing.checkout.payment-success', $transaction->id) }}';
-                },
-                // Optional
-                onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                },
-                // Optional
-                onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                }
-            });
+            fetch('{{ route('landing.checkout.snap-token', $transaction->id) }}')
+                .then(response => response.json())
+                .then(data => {
+                    snap.pay(data.snap_token, {
+                        onSuccess: function(result) {
+                            window.location.href =
+                                '{{ route('landing.checkout.payment-success', $transaction->id) }}';
+                        },
+                        onPending: function(result) {
+                            Swal.fire({
+                                title: 'Transaction Pending',
+                                text: JSON.stringify(result, null, 2),
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        },
+                        onError: function(result) {
+                            Swal.fire({
+                                title: 'Transaction Error',
+                                text: JSON.stringify(result, null, 2),
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching snap token:', error));
         };
     </script>
 @endsection

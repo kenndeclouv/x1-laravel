@@ -16,7 +16,8 @@
         <div class="layout-container">
             @include('components.layouts.sections.sidebar')
             <div class="layout-page">
-                @include('components.layouts.sections.nav')
+                {{-- @include('components.layouts.sections.nav') --}}
+                <x-layouts.sections.nav></x-layouts.sections.nav>
                 <div class="content-wrapper">
                     @yield('content')
                     @include('components.layouts.sections.footer')

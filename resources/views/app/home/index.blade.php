@@ -17,9 +17,8 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card h-100">
                     <div class="card-header pb-0">
-                        <h5 class="mb-3 card-title">Average Daily Sales</h5>
-                        <p class="mb-0 text-body">Total Sales This Month</p>
-                        <h4 class="mb-0">$28,450</h4>
+                        <h5 class="mb-3 card-title">Your Balance</h5>
+                        <h4 class="mb-0">{{ $money ?? 0 }}</h4>
                     </div>
                     <div class="card-body px-0">
                         <div id="averageDailySales"></div>
@@ -29,7 +28,7 @@
             <!--/ Average Daily Sales -->
 
             <!-- Sales Overview -->
-            <div class="col-xl-3 col-sm-6">
+            {{-- <div class="col-xl-3 col-sm-6">
                 <div class="card h-100">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -76,9 +75,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!--/ Sales Overview -->
-            <div class="col-xl-6 col">
+            {{-- <div class="col-xl-6 col">
                 <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg"
                     id="swiper-with-pagination-cards">
                     <div class="swiper-wrapper">
@@ -222,7 +221,7 @@
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>

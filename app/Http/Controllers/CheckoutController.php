@@ -63,6 +63,17 @@ class CheckoutController extends Controller
 
         return redirect()->route('landing.checkout.payment', $transaction->id);
     }
+    public function getSnapToken(Transaction $transaction)
+    {
+        // pastikan user yg minta snap token adalah pemilik transaksi ini
+        if ($transaction->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        return response()->json([
+            'snap_token' => $transaction->snap_token
+        ]);
+    }
 
     public function paymentSuccess(Transaction $transaction)
     {

@@ -1,6 +1,3 @@
-@php
-    $user = Auth::user();
-@endphp
 <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
     id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -78,6 +75,8 @@
                                     <h6 class="mb-0">{{ $user->name }}</h6>
                                     <small
                                         class="text-body-secondary">{{ $user->roles->first()->name ?? 'No Role' }}</small>
+                                    {{-- <small
+                                        class="text-body-secondary">{{ $money ?? '0' }}</small> --}}
                                 </div>
                             </div>
                         </a>

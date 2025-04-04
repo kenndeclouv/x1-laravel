@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Helpers\WebSocketHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -116,5 +118,10 @@ class User extends Authenticatable
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function getMoney()
+    {
+        return WebSocketHelper::getPlayerBalance($this->name);
     }
 }

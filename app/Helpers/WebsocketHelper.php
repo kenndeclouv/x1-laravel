@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use WebSocket\Client as WebSocketClient;
 
 class WebSocketHelper
@@ -83,12 +85,35 @@ class WebSocketHelper
                 "args" => [$command]
             ]));
 
-            // Terima response perintah
-            $commandResponse = $ws->receive();
+            // $startTime = time();
+            // $timeout = 5; // timeout dalam detik
+
+            // $responses = [];
+            // while ((time() - $startTime) < $timeout) {
+            //     $wsMessage = $ws->receive();
+            //     if (!$wsMessage) break;
+            //     $responses[] = $wsMessage;
+
+            //     if (strpos($wsMessage, 'end') !== false) {
+            //         break;
+            //     }
+            // }
+            $maxAttempts = 5; // maksimal nerima 10 pesan biar ga loop terus
+            $responses = [];
+
+            for ($i = 0; $i < $maxAttempts; $i++) {
+                $wsMessage = $ws->receive();
+                if (!$wsMessage) break; // stop kalo ga ada respon
+                $responses[] = $wsMessage;
+
+                if (strpos($wsMessage, 'end') !== false) { // Sesuaikan ini kalo ada tanda akhir respon
+                    break;
+                }
+            }
 
             return [
                 'authResponse' => $authResponse,
-                'commandResponse' => "Response command: " . $commandResponse,
+                'commandResponse' => $responses,
             ];
         } catch (\Exception $e) {
             return [
@@ -100,5 +125,25 @@ class WebSocketHelper
                 $ws->close();
             }
         }
+    }
+    public static function getPlayerBalance($name)
+    {
+        $response = WebSocketHelper::connectToWebSocket("money {$name}");
+
+        if (isset($response['error'])) {
+            return null; // atau kasih default balance
+        }
+
+        foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
+            $entry = json_decode(trim($entryString), true);
+
+            if (isset($entry['event']) && $entry['event'] === 'console output' && isset($entry['args'][0])) {
+                if (preg_match('/\\$([\d,]+)/', $entry['args'][0], $matches)) {
+                    return $matches[1]; // langsung return balance tanpa loop lanjut
+                }
+            }
+        }
+
+        return null; // default kalau balance ga ketemu
     }
 }
