@@ -39,11 +39,11 @@ class RedeemController extends Controller
                         'item_id' => $redeem->item_id,
                         'item_purchased_at' => now(),
                     ]);
-                    $command = "lp user {$user->name} parent addtemp {$redeem->item->code} {$redeem->item->period}d";
+                    $command = "lp user " . ($user->minecraft_uuid ?? $user->name) . " parent addtemp {$redeem->item->code} {$redeem->item->period}d";
                     break;
 
                 case 'money':
-                    $command = "eco give {$user->name} {$redeem->item->code}";
+                    $command = "eco give " . ($user->minecraft_uuid ?? $user->name) . " {$redeem->item->code}";
                     break;
 
                 default:

@@ -15,7 +15,7 @@
                     d="M34.528 36.0693L27.694 36.0694C27.598 36.0694 27.52 35.9913 27.5196 35.8948L27.5051 32.7606H32.4349C34.1778 32.7606 35.0559 30.6466 33.8307 29.4003L27.4597 22.9193L27.4407 18.7972C27.4402 18.6904 27.3457 18.6088 27.2406 18.6245L25.9245 18.821C25.7582 18.8459 25.6566 18.6431 25.7755 18.5235L34.3258 9.92658C34.4355 9.81627 34.6232 9.89407 34.6236 10.0501L34.7024 35.8934C34.7027 35.9905 34.6245 36.0693 34.528 36.0693Z"
                     fill="var(--bs-heading-color)" />
             </svg>
-            <span class="app-brand-text demo menu-text fw-bold ms-3">Community</span>
+            <span class="app-brand-text demo menu-text ms-4 minecraft-ten-v2">Community</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

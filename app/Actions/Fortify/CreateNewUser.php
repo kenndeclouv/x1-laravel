@@ -29,12 +29,14 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'minecraft_device' => ['nullable', 'in:java,bedrock'],
         ])->validate();
 
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'minecraft_device' => $input['minecraft_device'],
         ]);
 
         $user->roles()->attach(3);

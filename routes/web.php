@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\LogViewerController;
@@ -50,7 +51,8 @@ Route::name('landing.')->group(function () {
 Route::group(['middleware' => ['auth']], function () {
     // GENERAL
     Route::get('/home', [MainController::class, 'index'])->name('home');
-    Route::get('/profile', [MainController::class, 'profile'])->name('profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/minecraft-uuid', [ProfileController::class, 'getMinecraftUuid'])->name('get-minecraft-uuid');
     Route::get('/settings', [MainController::class, 'settings'])->name('settings');
 
     Route::group(['middleware' => ['permission']], function () {

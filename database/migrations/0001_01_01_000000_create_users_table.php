@@ -18,9 +18,15 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('photo')->nullable();
+            $table->enum('minecraft_device', ["java", "bedrock"])->default("bedrock");
+            $table->string("minecraft_uuid")->nullable();
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('user_relation_id')->nullable()->constrained('users')->NullOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

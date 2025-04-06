@@ -8,6 +8,8 @@ use App\Helpers\WebSocketHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class User extends Authenticatable
 {
@@ -24,6 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'photo',
+        'minecraft_device',
+        'minecraft_uuid',
     ];
 
     /**
@@ -49,27 +53,14 @@ class User extends Authenticatable
         ];
     }
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
-    private function getConsistentColor()
-    {
-        $hash = md5($this->name ?? env('APP_AUTHOR'));
-        $color = substr($hash, 0, 6);
-
-        return $color;
-    }
     public function getPhotoAttribute($value)
     {
         if (!empty($value) && !is_null($value)) {
             return $value;
         }
-        $color = $this->getConsistentColor();
-        $name = $this->name ?? env('APP_AUTHOR');
-
-        return "https://api.dicebear.com/6.x/initials/svg?seed=" . urlencode($name) . "&backgroundColor=" . $color;
+        return Cache::remember('user_photo_' . $this->id, now()->addMinutes(10), function () {
+            return $this->getSkinAttribute("head");
+        });
     }
 
     public function roles()
@@ -81,6 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(UserPermission::class);
     }
 
+    public function relation()
+    {
+        return $this->belongsToOne(User::class, 'user_relation_id') ?? null;
+    }
+
     public function getPermissionCodes()
     {
         if ($this->is_active) {
@@ -88,12 +84,15 @@ class User extends Authenticatable
                 ? $this->userPermissions->pluck('Permission.code')
                 : collect([]);
 
-            if ($codes->contains('all_feature')) {
-                return Permission::pluck('code');
-            }
             if ($this->roles->contains(env('APP_HIGHEST_ROLE', 'superadmin'))) {
                 return Permission::pluck('code');
             }
+            if ($codes->contains('all_feature')) {
+                return Permission::pluck('code');
+            }
+            // if ($this->roles->contains('admin')) {
+            //     return Permission::pluck('code');
+            // }
             return $codes;
         } else {
             return collect([]);
@@ -123,5 +122,70 @@ class User extends Authenticatable
     public function getMoney()
     {
         return WebSocketHelper::getPlayerBalance($this->name);
+    }
+
+    // Function untuk cek URL valid atau nggak
+    private function checkUrlExists($url)
+    {
+        try {
+            $response = Http::head($url); // Cuma cek HEAD, lebih cepat
+            return $response->successful();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    // https://starlightskins.lunareclipse.studio/render/:RENDERTYPE/:PLAYERNAME OR UUID/:RENDERCROP
+    public function getSkinAttribute($type)
+    {
+        // Ambil username user
+        $username = $this->name;
+        $modifiedUsername = '.' . $username; // Tambahin titik di depan username
+
+        // List tipe pose yang tersedia
+        $types = ["default", "marching", "walking", "crouching", "crossed", "criss_cross", "ultimate", "isometric", "cheering", "relaxing", "trudging", "pointing", "lunging", "dungeons", "archer", "kicking", "mojavatar", "reading", "high_ground"];
+
+        // Pilih pose random
+        $selectedType = $type ?? $types[rand(0, count($types) - 1)];
+
+        // Generate URLs
+        $skinUrl = "https://starlightskins.lunareclipse.studio/render/{$selectedType}/{$username}/full";
+        $skinUrlModified = "https://starlightskins.lunareclipse.studio/render/{$selectedType}/{$modifiedUsername}/full";
+
+        // Cek URL pertama
+        if ($this->checkUrlExists($skinUrl)) {
+            return $skinUrl; // ✅ Return URL langsung
+        }
+
+        // Cek URL kedua (pakai titik)
+        if ($this->checkUrlExists($skinUrlModified)) {
+            return $skinUrlModified; // ✅ Return URL langsung
+        }
+
+        $founderNames = [".kenndeclouv1229", "PixyPAYCRAFT", "AkangHaise"];
+        $selectedFounder = $founderNames[rand(1, count($founderNames) - 1)];
+        return "https://starlightskins.lunareclipse.studio/render/{$selectedType}/{$selectedFounder}/full"; // ❌ Kalau gak ada skin
+    }
+
+    public function getBackgrundAttribute($type)
+    {
+        // Ambil username user
+        $username = $this->name;
+        $modifiedUsername = '.' . $username; // Tambahin titik di depan username
+
+        // Generate URLs
+        $backgroundUrl = "https://starlightskins.lunareclipse.studio/render/wallpaper/herobrine_hill/{$username}";
+        $backgroundUrlModified = "https://starlightskins.lunareclipse.studio/render/wallpaper/herobrine_hill/{$modifiedUsername}";
+
+        // Cek URL pertama
+        if ($this->checkUrlExists($backgroundUrl)) {
+            return $backgroundUrl; // ✅ Return URL langsung
+        }
+
+        // Cek URL kedua (pakai titik)
+        if ($this->checkUrlExists($backgroundUrlModified)) {
+            return $backgroundUrlModified; // ✅ Return URL langsung
+        }
+
+        return "https://starlightskins.lunareclipse.studio/render/wallpaper/quick_hide/.kenndeclouv1229,PixyPAYCRAFT,AkangHaise"; // ❌ Kalau gak ada skin
     }
 }

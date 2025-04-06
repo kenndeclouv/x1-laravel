@@ -10,12 +10,14 @@ use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -41,6 +43,19 @@ class FortifyServiceProvider extends ServiceProvider
                 $redirectUrl = session()->pull('page_redirect', route('home'));
 
                 return redirect()->to($redirectUrl)->with('success', 'Register success welcome ' . Auth::user()->name . '!');
+            }
+        });
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+            public function toResponse($request)
+            {
+                $user = Auth::user();
+
+                // Hapus cache money & skin user sebelum logout
+                if ($user) {
+                    Cache::forget('user_money_' . $user->id);
+                    Cache::forget('user_skin_' . $user->id);
+                }
+                return redirect('/');
             }
         });
     }
@@ -100,4 +115,5 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.reset-password');
         });
     }
+    
 }

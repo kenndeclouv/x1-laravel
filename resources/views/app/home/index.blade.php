@@ -13,18 +13,31 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row g-6">
-            <!-- Average Daily Sales -->
+            <div class="col-xl-6 col-sm-6">
+                <div class="card h-100 position-relative">
+                    <div class="card-body text-end">
+                        <h1 class="mb-0 card-title minecraft-ten-v2" style="line-height: 0.9">WELCOME HOME!</h1>
+                        <h3 class="opacity-75">{{ $user->name }}</h3>
+                        <a href="minecraft://connect/pv-4.nebulasrv.my.id:19132"
+                            class="btn btn-primary text-white mt-8">Play
+                            Minecraft Now</a>
+                    </div>
+                    @if ($skin)
+                        <img src="{{ $skin }}" alt="" class="img-fluid position-absolute top-0 left-0"
+                            style="width: clamp(80px, 10vw ,150px); margin: -20px;">
+                    @endif
+                </div>
+            </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card h-100">
-                    <div class="card-header pb-0">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="mb-3 card-title">Your Balance</h5>
                         <h4 class="mb-0">{{ $money ?? 0 }}</h4>
-                    </div>
-                    <div class="card-body px-0">
-                        <div id="averageDailySales"></div>
+                        <i class="icon icon-base icon-xl ti tabler-coins mt-auto"></i>
                     </div>
                 </div>
             </div>
+            {{-- <p>{{ Auth::user()->skin }}</p> --}}
             <!--/ Average Daily Sales -->
 
             <!-- Sales Overview -->

@@ -48,6 +48,13 @@
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Enter your name" autofocus value="{{ old('name') }}" />
                             </div>
+                            <div class="mb-6 form-control-validation">
+                                <label for="minecraft_device" class="form-label">Minecraft Device</label>
+                                <select id="minecraft_device" name="minecraft_device" class="form-select">
+                                    <option value="bedrock" @if(old('minecraft_device') == 'bedrock') selected @endif>Bedrock</option>
+                                    <option value="java" @if(old('minecraft_device') == 'java') selected @endif>Java</option>
+                                </select>
+                            </div>
                             <div class="mb-6 form-password-toggle form-control-validation">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">

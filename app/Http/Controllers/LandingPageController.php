@@ -8,12 +8,18 @@ use App\Models\Staff;
 use WebSocket\Client as WebSocketClient;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LandingPageController extends Controller
 {
     public function index()
     {
-        return view('landing.index');
+        $serverData = Cache::remember('server_data', now()->addMinutes(10), function () {
+            return json_decode($this->getMinecraftServerData()->getContent(), true);
+        });
+        $onlineMembers = $serverData["players"]["online"];
+        $totalMembers = $serverData["players"]["max"];
+        return view('landing.index', compact('onlineMembers','totalMembers'));
     }
     public function rules()
     {
@@ -21,8 +27,12 @@ class LandingPageController extends Controller
     }
     public function store()
     {
-        $ranks = Item::where('type', 'rank')->get();
-        $moneys = Item::where('type', 'money')->get();
+        $ranks = Cache::remember('ranks', now()->addMinutes(10), function () {
+            return Item::where('type', 'rank')->get();
+        });
+        $moneys = Cache::remember('moneys', now()->addMinutes(10), function () {
+            return Item::where('type', 'money')->get();
+        });
         return view('landing.store', compact('ranks', 'moneys'));
     }
     public function checkout(Item $item)
@@ -35,7 +45,9 @@ class LandingPageController extends Controller
     }
     public function staff()
     {
-        $staffs = Staff::all();
+        $staffs = Cache::remember('staffs', now()->addMinutes(10), function () {
+            return Staff::all();
+        });
         return view('landing.staff', compact('staffs'));
     }
 

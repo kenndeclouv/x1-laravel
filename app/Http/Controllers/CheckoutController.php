@@ -113,11 +113,11 @@ class CheckoutController extends Controller
                         'item_id' => $transaction->item_id,
                         'item_purchased_at' => now(),
                     ]);
-                    $command = "lp user {$transaction->user->name} parent addtemp {$transaction->item->code} {$transaction->item->period}d";
+                    $command = "lp user " . ($transaction->user->minecraft_uuid ?? $transaction->user->name) . " parent addtemp " . $transaction->item->code . " " . $transaction->item->period . "d";
                     break;
 
                 case 'money':
-                    $command = "eco give {$transaction->user->name} {$transaction->item->code}";
+                    $command = "eco give " . ($transaction->user->minecraft_uuid ?? $transaction->user->name) . " " . $transaction->item->code;
                     break;
 
                 default:

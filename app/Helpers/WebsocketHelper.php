@@ -146,4 +146,24 @@ class WebSocketHelper
 
         return null; // default kalau balance ga ketemu
     }
+    public static function getPlayerRank($name)
+    {
+        $response = WebSocketHelper::connectToWebSocket("money {$name}");
+
+        if (isset($response['error'])) {
+            return null; // atau kasih default balance
+        }
+
+        foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
+            $entry = json_decode(trim($entryString), true);
+
+            if (isset($entry['event']) && $entry['event'] === 'console output' && isset($entry['args'][0])) {
+                if (preg_match('/\\$([\d,]+)/', $entry['args'][0], $matches)) {
+                    return $matches[1]; // langsung return balance tanpa loop lanjut
+                }
+            }
+        }
+
+        return null; // default kalau balance ga ketemu
+    }
 }
