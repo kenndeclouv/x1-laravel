@@ -85,19 +85,6 @@ class WebSocketHelper
                 "args" => [$command]
             ]));
 
-            // $startTime = time();
-            // $timeout = 5; // timeout dalam detik
-
-            // $responses = [];
-            // while ((time() - $startTime) < $timeout) {
-            //     $wsMessage = $ws->receive();
-            //     if (!$wsMessage) break;
-            //     $responses[] = $wsMessage;
-
-            //     if (strpos($wsMessage, 'end') !== false) {
-            //         break;
-            //     }
-            // }
             $maxAttempts = 5; // maksimal nerima 10 pesan biar ga loop terus
             $responses = [];
 
@@ -130,9 +117,9 @@ class WebSocketHelper
     {
         $response = WebSocketHelper::connectToWebSocket("money {$name}");
 
-        if (isset($response['error'])) {
-            return null; // atau kasih default balance
-        }
+        if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
+            return null;
+        }        
 
         foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
             $entry = json_decode(trim($entryString), true);
@@ -150,9 +137,9 @@ class WebSocketHelper
     {
         $response = WebSocketHelper::connectToWebSocket("money {$name}");
 
-        if (isset($response['error'])) {
-            return null; // atau kasih default balance
-        }
+        if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
+            return null;
+        }        
 
         foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
             $entry = json_decode(trim($entryString), true);

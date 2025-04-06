@@ -17,12 +17,12 @@ class MainController extends Controller
         $money = Cache::remember('user_money_' . $user->id, now()->addMinutes(5), function () use ($user) {
             $moneyAmount = $user->getMoney();
             return $moneyAmount !== null ? $moneyAmount : 0; // Cache 0 kalau null
-        });
+        }) ;
 
         // Caching skin (10 menit) -> kalau null, tetap cache sebagai `null`
         $skin = Cache::remember('user_skin_' . $user->id, now()->addMinutes(10), function () use ($user) {
             return $user->skin ?: null; // Cache null kalau skin gak ada
-        });
+        }) ;
 
         return view('app.home.index', compact('money', 'skin', 'user'));
     }

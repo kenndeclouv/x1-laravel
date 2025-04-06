@@ -121,7 +121,7 @@ class User extends Authenticatable
 
     public function getMoney()
     {
-        return WebSocketHelper::getPlayerBalance($this->name);
+        return WebSocketHelper::getPlayerBalance($this->name) ?? 0;
     }
 
     // Function untuk cek URL valid atau nggak
