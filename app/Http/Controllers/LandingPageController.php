@@ -17,8 +17,8 @@ class LandingPageController extends Controller
         $serverData = Cache::remember('server_data', now()->addMinutes(10), function () {
             return json_decode($this->getMinecraftServerData()->getContent(), true);
         });
-        $onlineMembers = $serverData["players"]["online"];
-        $totalMembers = $serverData["players"]["max"];
+        $onlineMembers = $serverData["players"]["online"] ?? 0;
+        $totalMembers = $serverData["players"]["max"] ?? 0;
         return view('landing.index', compact('onlineMembers','totalMembers'));
     }
     public function rules()
