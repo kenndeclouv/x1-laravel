@@ -9,31 +9,37 @@
             <div class="container ">
                 <div class="d-flex flex-column vh-100">
                     <div class="my-auto">
-                        <h1 class="text-white minecraft-ten-v2 m-0" style="line-height: 0.95">Welcome, enjoy your time here</h1>
+                        <h1 class="text-white minecraft-ten-v2 m-0" style="line-height: 0.95">Welcome, enjoy your time here
+                        </h1>
                         <h2 class="text-white minecraft-ten-v2 opacity-75">and let’s play together!</h2>
-                        <p class="text-success" style="font-size: 1.5rem;" id="member-count-wrapper">
-                            <span id="member-count">{{ $onlineMembers }}/{{ $totalMembers }}</span> Online Members <span
-                                class="badge badge-center rounded-pill bg-success my-auto"
-                                style="width: 15px; height: 15px; display: inline-block;"></span></p>
-                        <a href="{{ Auth::check() ? route('home') : route('register') }}" class="btn btn-primary btn-lg"><i class="icon-base ti tabler-login scaleX-n1-rtl me-md-1"></i>
+                        @if ($totalMembers > 0)
+                            <p class="text-success" style="font-size: 1.5rem;" id="member-count-wrapper">
+                                <span id="member-count">{{ $onlineMembers }}/{{ $totalMembers }}</span> Online Members <span
+                                    class="badge badge-center rounded-pill bg-success my-auto"
+                                    style="width: 15px; height: 15px; display: inline-block;"></span>
+                            </p>
+                        @else
+                            <p class="text-warning" style="font-size: 1.5rem;" id="member-count-wrapper">
+                                <span id="member-count">Server Maintenance <span
+                                        class="badge badge-center rounded-pill bg-warning my-auto"
+                                        style="width: 15px; height: 15px; display: inline-block;"></span>
+                            </p>
+                        @endif
+                        <a href="{{ Auth::check() ? route('home') : route('register') }}" class="btn btn-primary btn-lg"><i
+                                class="icon-base ti tabler-login scaleX-n1-rtl me-md-1"></i>
                             Join Now</a>
                     </div>
                 </div>
             </div>
         </section>
         <section
-            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url({{ asset('assets/img/landing/hero-1.png') }}) lightgray 50% / cover no-repeat;">
+            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 1) 90%), url({{ asset('assets/img/landing/hero-10.png') }}) lightgray 50% / cover no-repeat;">
             <div class="container ">
                 <div class="d-flex flex-column vh-100">
-                    <div class="my-auto">
-                        <h1 class="text-white minecraft-ten-v2 m-0" style="line-height: 0.95">Welcome, enjoy your time here</h1>
-                        <h2 class="text-white minecraft-ten-v2 opacity-75">and let’s play together!</h2>
-                        <p class="text-success" style="font-size: 1.5rem;" id="member-count-wrapper">
-                            <span id="member-count">0/0</span> Online Members <span
-                                class="badge badge-center rounded-pill bg-success my-auto"
-                                style="width: 15px; height: 15px; display: inline-block;"></span></p>
-                        <a href="{{ Auth::check() ? route('home') : route('register') }}" class="btn btn-primary btn-lg"><i class="icon-base ti tabler-login scaleX-n1-rtl me-md-1"></i>
-                            Join Now</a>
+                    <div class="mt-auto text-center mb-5">
+                        <h1 class="text-white minecraft-ten-v2" style="line-height: 0.95">Play with all awesome friends!
+                        </h1>
+                        {{-- <h3>{{ implode(' ,', $onlineMemberList) ?? '' }}</h3> --}}
                     </div>
                 </div>
             </div>

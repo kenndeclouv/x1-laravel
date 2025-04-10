@@ -19,7 +19,8 @@ class LandingPageController extends Controller
         });
         $onlineMembers = $serverData["players"]["online"] ?? 0;
         $totalMembers = $serverData["players"]["max"] ?? 0;
-        return view('landing.index', compact('onlineMembers','totalMembers'));
+        $onlineMemberList = $serverData["players"]["list"] ?? null;
+        return view('landing.index', compact('onlineMembers', 'totalMembers', 'onlineMemberList'));
     }
     public function rules()
     {
@@ -45,15 +46,88 @@ class LandingPageController extends Controller
     }
     public function staff()
     {
-        $staffs = Cache::remember('staffs', now()->addMinutes(10), function () {
-            return Staff::all();
-        });
+        // $staffs = Cache::remember('staffs', now()->addMinutes(10), function () {
+        //     return Staff::all();
+        // });
+        $staffs = [
+            [
+                'name' => 'Vinn',
+                'photo' => 'vinn.jpg',
+                'role' => 'Founder',
+            ],
+            [
+                'name' => 'PixyPAYCRAFT',
+                'photo' => 'pixypaycraft.jpg',
+                'role' => 'Developer',
+                'link' => 'https://instagram.com/pxclvr',
+            ],
+            [
+                'name' => 'kenndeclouv',
+                'photo' => 'kenndeclouv.png',
+                'role' => 'Developer',
+                'link' => 'https://kenndeclouv.my.id',
+                'minecraft_device' => 'java',
+            ],
+            [
+                'name' => 'AkangHaise',
+                'photo' => 'akanghaise.png',
+                'role' => 'Inspector',
+                'link' => 'https://instagram.com/maktanul',
+            ],
+            [
+                'name' => 'Ririink',
+                'photo' => 'ririink.png',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/vnist_sir',
+            ],
+            [
+                'name' => 'Ratma_hikaru',
+                'photo' => 'ratma_hikaru.png',
+                'role' => 'Helper',
+                'link' => 'https://tiktok.com/@rinnechhi_1',
+            ],
+            [
+                'name' => 'Rannkanaeru',
+                'photo' => 'rannkanaeru.jpg',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/rannkanaeru',
+            ],
+            [
+                'name' => 'JumHzx',
+                'photo' => 'jumhzx.png',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/jumhzx',
+            ],
+            [
+                'name' => 'Little_Craft6113',
+                'photo' => 'little_craft6113.png',
+                'role' => 'Helper',
+                'link' => 'https://instagram.com/litte_craft6113',
+            ],
+            [
+                'name' => 'Corvusion4249',
+                'photo' => 'corvusion4249.png',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/corpsiyon',
+            ],
+            [
+                'name' => 'Finnlapox',
+                'photo' => 'finnlapox.png',
+                'role' => 'Moderator',
+                'link' => 'https://instagram.com/finnhxh',
+            ],
+        ];
         return view('landing.staff', compact('staffs'));
     }
 
     public function thanks()
     {
         return view('landing.thanks');
+    }
+
+    public function maps()
+    {
+        return view('landing.maps');
     }
     public function getGuildMembers()
     {
@@ -112,7 +186,7 @@ class LandingPageController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->get("https://panel.nebulasrv.my.id/api/client/servers/" . $server, [
+            $response = $client->get(env('SERVER_API_ENDPOINT') . "/api/client/servers/" . $server, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . env('SERVER_API_KEY'),
                 ],

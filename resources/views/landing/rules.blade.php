@@ -32,7 +32,7 @@
                     style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                     <div class="card-body p-0 pt-6 position-relative">
                         <div class="text-center">
-                            <h2 style="color: var(--bs-info); font-weight: bold; text-transform: uppercase;">Peraturan Grup &
+                            <h2 style="color: var(--bs-warning); font-weight: bold; text-transform: uppercase;">Peraturan Grup &
                                 Server X1 Community</h2>
                             <ul class="list-group list-group-flush" style="color: #ffffff;">
                                 <li class="list-group-item">Dilarang melakukan PvP tanpa persetujuan kedua pemain atau
@@ -57,12 +57,12 @@
                                 </li>
                                 <li class="list-group-item">Dilarang membawa masalah pribadi ke ranah umum</li>
                             </ul>
-                            <h2 style="color: var(--bs-info); font-weight: bold; text-transform: uppercase;">⚖ Sanksi Pelanggaran
+                            <h2 style="color: var(--bs-warning); font-weight: bold; text-transform: uppercase;">⚖ Sanksi Pelanggaran
                             </h2>
                             <p style="color: #ffffff;">Barang siapa yang melanggar aturan ini akan dikenakan hukuman
                                 berdasarkan kebijaksanaan
                                 Owner.</p>
-                            <h2 style="color: var(--bs-info); font-weight: bold; text-transform: uppercase;">⚜ Jaga kehormatan,
+                            <h2 style="color: var(--bs-warning); font-weight: bold; text-transform: uppercase;">⚜ Jaga kehormatan,
                                 hormati sesama, dan nikmati permainan dengan penuh kebijaksanaan.</h2>
                         </div>
                     </div>

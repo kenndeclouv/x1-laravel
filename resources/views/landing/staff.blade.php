@@ -26,13 +26,13 @@
                                 style="background-color: rgba(var(--bs-body-bg-rgb), 0.6); backdrop-filter: blur(10px);">
                                 <div class="rounded-2 text-center mb-4">
                                     <img class="img-fluid rounded-2"
-                                        src="{{ asset('assets/img/landing/staff/' . $staff->photo) }}"
-                                        alt="{{ $staff->name }}" style="width: clamp(128px, 100%, 256px);">
+                                        src="{{ asset('assets/img/landing/staff/' . $staff["photo"]) }}"
+                                        alt="{{ $staff["name"] }}" style="width: clamp(128px, 100%, 256px);">
                                 </div>
                                 <div class="card-body pt-2 pb-0 text-center">
-                                    <span class="badge bg-label-primary">{{ $staff->role }}</span>
+                                    <span class="badge bg-label-primary">{{ $staff["role"] }}</span>
                                     <br>
-                                    <a href="{{ $staff->link ?? '#' }}" target="_blank" class="h2 minecraft-ten-v2">{{ $staff->name }}</a>
+                                    <a href="{{ $staff["link"] ?? '#' }}" target="_blank" class="h2 minecraft-ten-v2">{{ $staff["name"] }}</a>
                                 </div>
                             </div>
                         </div>

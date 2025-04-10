@@ -26,7 +26,7 @@ class ProfileController extends Controller
             return Auth::user();
         });
 
-        $url = "https://panel.nebulasrv.my.id/api/client/servers/" . env('SERVER_UUID') . "/files/contents?file=usercache.json";
+        $url = env('SERVER_API_ENDPOINT') . "/api/client/servers/" . env('SERVER_UUID') . "/files/contents?file=usercache.json";
 
         $response = Http::withToken(env("SERVER_API_KEY"))->get($url);
 
@@ -52,7 +52,7 @@ class ProfileController extends Controller
     }
     public function getUuidByName($playerName)
     {
-        $url = "https://panel.nebulasrv.my.id/api/client/servers/" . env('SERVER_UUID') . "/files/contents?file=usercache.json";
+        $url = env('SERVER_API_ENDPOINT') . "/api/client/servers/" . env('SERVER_UUID') . "/files/contents?file=usercache.json";
 
         $response = Http::withToken(env("SERVER_API_KEY"))->get($url);
 

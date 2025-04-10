@@ -28,10 +28,11 @@ class StaffSeeder extends Seeder
                 'link' => 'https://instagram.com/pxclvr',
             ],
             [
-                'name' => 'kenndeclouv1229',
+                'name' => 'kenndeclouv',
                 'photo' => 'kenndeclouv.png',
                 'role' => 'Developer',
                 'link' => 'https://kenndeclouv.my.id',
+                'minecraft_device' => 'java',
             ],
             [
                 'name' => 'AkangHaise',
@@ -84,7 +85,6 @@ class StaffSeeder extends Seeder
         ];
 
         foreach ($staffs as $staff) {
-            Staff::firstOrCreate($staff);
             $user = User::firstOrCreate([
                 'name' => $staff['name'],
                 'email' => Str::lower($staff['name']) . '@x1.com',

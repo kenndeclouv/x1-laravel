@@ -46,6 +46,7 @@ Route::name('landing.')->group(function () {
     });
     Route::get('/staff', [LandingPageController::class, 'staff'])->name('staff');
     Route::get('/thanks', [LandingPageController::class, 'thanks'])->name('thanks');
+    Route::get('/maps', [LandingPageController::class, 'maps'])->name('maps');
 });
 
 Route::group(['middleware' => ['auth']], function () {

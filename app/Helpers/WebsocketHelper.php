@@ -15,7 +15,7 @@ class WebSocketHelper
 
         try {
             // Fetch WebSocket token from API
-            $response = $client->request('GET', 'https://panel.nebulasrv.my.id/api/client/servers/' . env('SERVER_UUID') . '/websocket', [
+            $response = $client->request('GET', env('SERVER_API_ENDPOINT') . '/api/client/servers/' . env('SERVER_UUID') . '/websocket', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . env('SERVER_API_KEY'),
                     'Accept' => 'application/json',
@@ -65,7 +65,7 @@ class WebSocketHelper
         try {
             $ws = new WebSocketClient($url, [
                 'headers' => [
-                    'Origin' => 'https://panel.nebulasrv.my.id',
+                    'Origin' => env('SERVER_API_ENDPOINT'),
                 ],
             ]);
 
@@ -119,7 +119,7 @@ class WebSocketHelper
 
         if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
             return null;
-        }        
+        }
 
         foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
             $entry = json_decode(trim($entryString), true);
@@ -139,7 +139,7 @@ class WebSocketHelper
 
         if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
             return null;
-        }        
+        }
 
         foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
             $entry = json_decode(trim($entryString), true);
