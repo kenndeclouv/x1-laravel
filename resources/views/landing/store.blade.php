@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="nav-align-left mt-6 pt-6" id="tab">
-                    <ul class="nav nav-pills me-md-4" role="tablist">
+                    <ul class="nav nav-pills me-md-4 bg-light rounded-3 p-3" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button type="button" class="nav-link waves-effect waves-light active" role="tab"
                                 data-bs-toggle="tab" data-bs-target="#rank-tab" aria-controls="rank-tab"
@@ -140,8 +140,7 @@
                                                                     id="item-description-{{ $rank->id }}">{{ $rank->description }}</small>
                                                             </span>
                                                             <input name="item" class="form-check-input" type="radio"
-                                                                value="{{ $rank->id }}"
-                                                                id="item-{{ $rank->id }}"
+                                                                value="{{ $rank->id }}" id="item-{{ $rank->id }}"
                                                                 @checked($loop->first)>
                                                         </label>
                                                     </div>
@@ -149,7 +148,8 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    <a id="checkout-button" onclick="checkout()" class="btn btn-primary btn-lg text-white"><i
+                                    <a id="checkout-button" onclick="checkout()"
+                                        class="btn btn-primary btn-lg text-white"><i
                                             class="ti tabler-shopping-cart me-2"></i>
                                         Checkout Now </a>
                                 @else
@@ -198,7 +198,8 @@
                                 <div class="card-body">
                                     <h2 class="minecraft-ten-v2"> Money</h2>
                                     <p>
-                                        Get instant access to in-game currency and enhance your Minecraft experience with our money packs. Gacha and explore new possibilities.
+                                        Get instant access to in-game currency and enhance your Minecraft experience with
+                                        our money packs. Gacha and explore new possibilities.
                                     </p>
                                 </div>
                             </div>
@@ -226,8 +227,7 @@
                                                                 id="item-description-{{ $money->id }}">{{ $money->description }}</small>
                                                         </span>
                                                         <input name="item" class="form-check-input" type="radio"
-                                                            value="{{ $money->id }}"
-                                                            id="item-{{ $money->id }}">
+                                                            value="{{ $money->id }}" id="item-{{ $money->id }}">
                                                     </label>
                                                 </div>
                                             </div>

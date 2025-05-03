@@ -13,18 +13,23 @@ class MainController extends Controller
     {
         $user = Auth::user();
 
-        // Caching money (5 menit) -> kalau null, tetap cache sebagai `0`
-        $money = Cache::remember('user_money_' . $user->id, now()->addMinutes(5), function () use ($user) {
-            $moneyAmount = $user->getMoney();
-            return $moneyAmount !== null ? $moneyAmount : 0; // Cache 0 kalau null
-        }) ;
+        // Caching money (15 menit) -> kalau null, tetap cache sebagai `0`
+        $userMinecraftData = [];
+        if (!$user->roles->contains('code', env('APP_HIGHEST_ROLE', 'super_admin'))) {
+            $userMinecraftData = Cache::remember('user_minecraft_data_' . $user->id, now()->addMinutes(15), function () use ($user) {
+                $userMinecraftData = $user->getMinecraftData();
+                return $userMinecraftData !== null ? $userMinecraftData : []; // Cache 0 kalau null
+            });
+        }
 
-        // Caching skin (10 menit) -> kalau null, tetap cache sebagai `null`
         $skin = Cache::remember('user_skin_' . $user->id, now()->addMinutes(10), function () use ($user) {
-            return $user->skin ?: null; // Cache null kalau skin gak ada
-        }) ;
+            return $user->skin ?: null;
+        });
 
-        return view('app.home.index', compact('money', 'skin', 'user'));
+        $minecraftData = Cache::remember('server_data', now()->addMinutes(10), function () {
+            return json_decode(getMinecraftServerData()->getContent(), true);
+        });
+        return view('app.home.index', compact('userMinecraftData', 'minecraftData', 'skin', 'user'));
     }
 
 

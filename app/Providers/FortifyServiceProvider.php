@@ -52,7 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
 
                 // Hapus cache money & skin user sebelum logout
                 if ($user) {
-                    Cache::forget('user_money_' . $user->id);
+                    Cache::forget('user_minecraft_data_' . $user->id);
                     Cache::forget('user_skin_' . $user->id);
                 }
                 return redirect('/');

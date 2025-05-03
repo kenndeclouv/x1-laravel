@@ -15,7 +15,7 @@ class LandingPageController extends Controller
     public function index()
     {
         $serverData = Cache::remember('server_data', now()->addMinutes(10), function () {
-            return json_decode($this->getMinecraftServerData()->getContent(), true);
+            return json_decode(getMinecraftServerData()->getContent(), true);
         });
         $onlineMembers = $serverData["players"]["online"] ?? 0;
         $totalMembers = $serverData["players"]["max"] ?? 0;
@@ -28,10 +28,10 @@ class LandingPageController extends Controller
     }
     public function store()
     {
-        $ranks = Cache::remember('ranks', now()->addMinutes(10), function () {
+        $ranks = Cache::remember('ranks', now()->addDay(), function () {
             return Item::where('type', 'rank')->get();
         });
-        $moneys = Cache::remember('moneys', now()->addMinutes(10), function () {
+        $moneys = Cache::remember('moneys', now()->addDay(), function () {
             return Item::where('type', 'money')->get();
         });
         return view('landing.store', compact('ranks', 'moneys'));
@@ -63,26 +63,26 @@ class LandingPageController extends Controller
             ],
             [
                 'name' => 'kenndeclouv',
-                'photo' => 'kenndeclouv.png',
+                'photo' => 'kennrender.png',
                 'role' => 'Developer',
                 'link' => 'https://kenndeclouv.my.id',
                 'minecraft_device' => 'java',
             ],
             [
                 'name' => 'AkangHaise',
-                'photo' => 'akanghaise.png',
+                'photo' => 'akangrender.png',
                 'role' => 'Inspector',
                 'link' => 'https://instagram.com/maktanul',
             ],
             [
                 'name' => 'Ririink',
-                'photo' => 'ririink.png',
+                'photo' => 'ririinkrender.png',
                 'role' => 'Helper',
                 'link' => 'https://instagram.com/vnist_sir',
             ],
             [
                 'name' => 'Ratma_hikaru',
-                'photo' => 'ratma_hikaru.png',
+                'photo' => 'rinnerender.png',
                 'role' => 'Helper',
                 'link' => 'https://tiktok.com/@rinnechhi_1',
             ],
@@ -94,7 +94,7 @@ class LandingPageController extends Controller
             ],
             [
                 'name' => 'JumHzx',
-                'photo' => 'jumhzx.png',
+                'photo' => 'jumrender.png',
                 'role' => 'Moderator',
                 'link' => 'https://instagram.com/jumhzx',
             ],
@@ -106,7 +106,7 @@ class LandingPageController extends Controller
             ],
             [
                 'name' => 'Corvusion4249',
-                'photo' => 'corvusion4249.png',
+                'photo' => 'finarender.png',
                 'role' => 'Moderator',
                 'link' => 'https://instagram.com/corpsiyon',
             ],
@@ -128,79 +128,5 @@ class LandingPageController extends Controller
     public function maps()
     {
         return view('landing.maps');
-    }
-    public function getGuildMembers()
-    {
-        $guildId = env('DISCORD_GUILD_ID'); // Ganti dengan ID server Anda
-        $botToken = env('DISCORD_BOT_TOKEN'); // Ganti dengan token bot Anda
-
-        $client = new Client();
-
-        try {
-            $response = $client->get("https://discord.com/api/v10/guilds/{$guildId}/members?limit=1000", [
-                'headers' => [
-                    'Authorization' => "Bot {$botToken}",
-                ],
-            ]);
-
-            $members = json_decode($response->getBody(), true);
-
-            // Hitung jumlah anggota
-            $totalMembers = count($members);
-
-            // Hitung jumlah anggota online
-            $onlineMembers = 0;
-            foreach ($members as $member) {
-                if (isset($member['presence']) && $member['presence']['status'] === 'online') {
-                    $onlineMembers++;
-                }
-            }
-
-            return response()->json([
-                'total_members' => $totalMembers,
-                'online_members' => $onlineMembers,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-    public function getMinecraftServerData()
-    {
-        $server = env('MINECRAFT_SERVER');
-
-        $client = new Client();
-
-        try {
-            $response = $client->get("https://api.mcstatus.io/v2/status/java/" . $server);
-
-            $data = json_decode($response->getBody(), true);
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-    public function getServerData()
-    {
-        $server = env('SERVER_UUID');
-
-        $client = new Client();
-
-        try {
-            $response = $client->get(env('SERVER_API_ENDPOINT') . "/api/client/servers/" . $server, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . env('SERVER_API_KEY'),
-                ],
-            ]);
-
-            $data = json_decode($response->getBody(), true);
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-    public function connectToWebSocket($command)
-    {
-        $response = WebSocketHelper::connectToWebSocket($command);
-        return response()->json($response);
     }
 }

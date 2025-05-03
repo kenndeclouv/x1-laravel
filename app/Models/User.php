@@ -119,9 +119,9 @@ class User extends Authenticatable
         return $this->belongsTo(Item::class);
     }
 
-    public function getMoney()
+    public function getMinecraftData()
     {
-        return WebSocketHelper::getPlayerBalance($this->name) ?? 0;
+        return WebSocketHelper::getPlayerData($this->name) ?? 0;
     }
 
     // Function untuk cek URL valid atau nggak
@@ -139,13 +139,19 @@ class User extends Authenticatable
     {
         // Ambil username user
         $username = $this->name;
-        $modifiedUsername = '.' . $username; // Tambahin titik di depan username
 
+        $founderNames = ["kenndeclouv", "PixyPAYCRAFT", "AkangHaise"];
+        $selectedFounder = $founderNames[rand(1, count($founderNames) - 1)];
         // List tipe pose yang tersedia
         $types = ["default", "marching", "walking", "crouching", "crossed", "criss_cross", "ultimate", "isometric", "cheering", "relaxing", "trudging", "pointing", "lunging", "dungeons", "archer", "kicking", "mojavatar", "reading", "high_ground"];
 
         // Pilih pose random
         $selectedType = $type ?? $types[rand(0, count($types) - 1)];
+
+        if ($this->roles->contains('code', env('APP_HIGHEST_ROLE', 'super_admin'))) {
+            return "https://starlightskins.lunareclipse.studio/render/{$selectedType}/kenndeclouv/full";
+        }
+        $modifiedUsername = '.' . $username; // Tambahin titik di depan username
 
         // Generate URLs
         $skinUrl = "https://starlightskins.lunareclipse.studio/render/{$selectedType}/{$username}/full";
@@ -161,16 +167,18 @@ class User extends Authenticatable
             return $skinUrlModified; // ✅ Return URL langsung
         }
 
-        $founderNames = [".kenndeclouv1229", "PixyPAYCRAFT", "AkangHaise"];
-        $selectedFounder = $founderNames[rand(1, count($founderNames) - 1)];
         return "https://starlightskins.lunareclipse.studio/render/{$selectedType}/{$selectedFounder}/full"; // ❌ Kalau gak ada skin
     }
 
-    public function getBackgrundAttribute($type)
+    public function getBackgrundAttribute()
     {
         // Ambil username user
         $username = $this->name;
         $modifiedUsername = '.' . $username; // Tambahin titik di depan username
+
+        if ($this->roles->contains('code', env('APP_HIGHEST_ROLE', 'super_admin'))) {
+            return "https://starlightskins.lunareclipse.studio/render/wallpaper/herobrine_hill/kenndeclouv";
+        }
 
         // Generate URLs
         $backgroundUrl = "https://starlightskins.lunareclipse.studio/render/wallpaper/herobrine_hill/{$username}";
@@ -186,6 +194,6 @@ class User extends Authenticatable
             return $backgroundUrlModified; // ✅ Return URL langsung
         }
 
-        return "https://starlightskins.lunareclipse.studio/render/wallpaper/quick_hide/.kenndeclouv1229,PixyPAYCRAFT,AkangHaise"; // ❌ Kalau gak ada skin
+        return "https://starlightskins.lunareclipse.studio/render/wallpaper/quick_hide/kenndeclouv,PixyPAYCRAFT,AkangHaise"; // ❌ Kalau gak ada skin
     }
 }

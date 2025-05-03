@@ -18,7 +18,7 @@
                     <div class="card-body text-end">
                         <h1 class="mb-0 card-title minecraft-ten-v2" style="line-height: 0.9">WELCOME HOME!</h1>
                         <h3 class="opacity-75">{{ $user->name }}</h3>
-                        <a href="minecraft://connect/pv-4.nebulasrv.my.id:19132"
+                        <a href="minecraft://connect/{{ config('app.minecraft_server') }}"
                             class="btn btn-primary text-white mt-8">Play
                             Minecraft Now</a>
                     </div>
@@ -28,15 +28,35 @@
                     @endif
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="mb-3 card-title">Your Balance</h5>
-                        <h4 class="mb-0">{{ $money ?? 0 }}</h4>
-                        <i class="icon icon-base icon-xl ti tabler-coins mt-auto"></i>
+            @if (!Auth::user()->roles->contains('code', env('APP_HIGHEST_ROLE', 'super_admin')))
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-3 card-title">Your Balance</h5>
+                            <h4 class="mb-0">{{ $userMinecraftData['balance'] ?? 0 }}</h4>
+                            <i class="icon icon-base icon-xl ti tabler-coins mt-auto"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-3 card-title">Your Rank</h5>
+                            <h4 class="mb-0">{{ $userMinecraftData['rank'] ?? 'Member' }}</h4>
+                            <i class="icon icon-base icon-xl ti tabler-medal-2 mt-auto"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-3 card-title">Server stats</h5>
+                            <h4 class="mb-0">{{ $minecraftData['players']['max'] ?? 0 }}</h4>
+                            <i class="icon icon-base icon-xl ti tabler-medal-2 mt-auto"></i>
+                        </div>
+                    </div>
+                </div>
+            @endif
             {{-- <p>{{ Auth::user()->skin }}</p> --}}
             <!--/ Average Daily Sales -->
 

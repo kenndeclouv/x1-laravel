@@ -122,5 +122,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-    'author' => env('APP_AUTHOR', 'kenndeclouv')
+    'author' => env('APP_AUTHOR', 'kenndeclouv'),
+    'minecraft_server' =>env('MINECRAFT_SERVER', 'pv-4.nebulasrv.my.id:19173'),
 ];

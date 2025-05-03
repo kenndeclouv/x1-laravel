@@ -9,7 +9,7 @@ use WebSocket\Client as WebSocketClient;
 
 class WebSocketHelper
 {
-    public static function connectToWebSocket($command)
+    public static function connectToWebSocket($command = "?", $maxAttemps = 5)
     {
         $client = new Client();
 
@@ -34,7 +34,7 @@ class WebSocketHelper
             $webSocketUrl = $data['data']['socket'];
 
             // Connect to WebSocket server and get the response
-            $websocketResponse = self::connectToWebSocketServer($webSocketUrl, $token, $command ?? '?');
+            $websocketResponse = self::connectToWebSocketServer($webSocketUrl, $token, $command);
 
             return [
                 'message' => 'WebSocket connection initiated',
@@ -69,31 +69,34 @@ class WebSocketHelper
                 ],
             ]);
 
-            // Kirim event auth setelah koneksi terbuka
             $ws->send(json_encode([
                 "event" => "auth",
                 "args" => [$token]
             ]));
 
-            // Tunggu respon auth
             $response = $ws->receive();
             $authResponse = "Response dari WebSocket: " . $response;
 
-            // Kalau sukses, baru kirim perintah
             $ws->send(json_encode([
                 "event" => "send command",
                 "args" => [$command]
             ]));
 
-            $maxAttempts = 5; // maksimal nerima 10 pesan biar ga loop terus
             $responses = [];
 
-            for ($i = 0; $i < $maxAttempts; $i++) {
+            while (true) {
                 $wsMessage = $ws->receive();
-                if (!$wsMessage) break; // stop kalo ga ada respon
+                if (!$wsMessage) break;
+
                 $responses[] = $wsMessage;
 
-                if (strpos($wsMessage, 'end') !== false) { // Sesuaikan ini kalo ada tanda akhir respon
+                // auto stop kalau message udah mengandung data stats yang valid
+                if (preg_match('/(cpu_absolute|disk_bytes|memory_bytes|network|uptime)/', $wsMessage)) {
+                    break;
+                }
+
+                // optional: fallback tambahan
+                if (strpos($wsMessage, 'end') !== false) {
                     break;
                 }
             }
@@ -113,44 +116,71 @@ class WebSocketHelper
             }
         }
     }
-    public static function getPlayerBalance($name)
+
+    public static function getPlayerData($name)
     {
-        $response = WebSocketHelper::connectToWebSocket("money {$name}");
+        $commands = [
+            "money {$name}",
+            "lp user {$name} info"
+        ];
+
+        $response = WebSocketHelper::connectToWebSocket(implode("\n", $commands));
 
         if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
             return null;
         }
 
-        foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
-            $entry = json_decode(trim($entryString), true);
-
-            if (isset($entry['event']) && $entry['event'] === 'console output' && isset($entry['args'][0])) {
-                if (preg_match('/\\$([\d,]+)/', $entry['args'][0], $matches)) {
-                    return $matches[1]; // langsung return balance tanpa loop lanjut
-                }
-            }
-        }
-
-        return null; // default kalau balance ga ketemu
-    }
-    public static function getPlayerRank($name)
-    {
-        $response = WebSocketHelper::connectToWebSocket("money {$name}");
-
-        if (isset($response['error']) || !isset($response['websocketResponse']['commandResponse'])) {
-            return null;
-        }
+        $balance = null;
+        $rank = null;
+        $prefix = null;
+        $prefixColor = null;
 
         foreach ($response['websocketResponse']['commandResponse'] as $entryString) {
             $entry = json_decode(trim($entryString), true);
 
             if (isset($entry['event']) && $entry['event'] === 'console output' && isset($entry['args'][0])) {
-                if (preg_match('/\\$([\d,]+)/', $entry['args'][0], $matches)) {
-                    return $matches[1]; // langsung return balance tanpa loop lanjut
+                $line = $entry['args'][0];
+
+                // cari balance
+                if ($balance === null && preg_match('/\$([\d,]+)/', $line, $moneyMatch)) {
+                    $balance = $moneyMatch[1];
+                }
+
+                // cari rank
+                if ($rank === null && preg_match('/primarygroup=\x1b\[97m([a-zA-Z0-9_-]+)/', $line, $rankMatch)) {
+                    $rank = $rankMatch[1];
+                }
+
+                // cari prefix dan warnanyaa
+                // if ($prefix === null && preg_match('/\e\[(\d+)m\[\e\[(\d+)m(.*?)\e\[97m\]/', $line, $prefixMatch)) {
+                //     $prefix = $prefixMatch[3];
+
+                //     $colorCode = $prefixMatch[2];
+                //     $colorMap = [
+                //         '31' => '#ff5555',
+                //         '32' => '#50fa7b',
+                //         '33' => '#f1fa8c',
+                //         '34' => '#bd93f9',
+                //         '35' => '#ff79c6',
+                //         '36' => '#8be9fd',
+                //         '97' => '#ffffff',
+                //     ];
+
+                //     $prefixColor = $colorMap[$colorCode] ?? '#ffffff';
+                // }
+
+                // kalau semua udah ketemu
+                if ($balance !== null && $rank !== null) {
+                    break;
                 }
             }
         }
 
-        return null; // default kalau balance ga ketemu
+        return [
+            'balance' => $balance,
+            'rank' => $rank,
+            'prefix' => $prefix,
+            'prefix_color' => $prefixColor,
+        ];
     }
 }

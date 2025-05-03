@@ -3,8 +3,8 @@
 
 @section('page-script')
     <!-- TODO: Remove ".sandbox" from script src URL for production environment. Also input your client key in "data-client-key" -->
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.clientKey') }}">
-    </script>
+    <script src="https://app.{{ config('midtrans.isProduction') ? '' : 'sandbox.' }}midtrans.com/snap/snap.js"
+        data-client-key="{{ config('midtrans.clientKey') }}"></script>
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {
             fetch('{{ route('landing.checkout.snap-token', $transaction->id) }}')
@@ -18,7 +18,7 @@
                         onPending: function(result) {
                             Swal.fire({
                                 title: 'Transaction Pending',
-                                text: JSON.stringify(result, null, 2),
+                                text: JSON.stringify(result["transaction_status"], null, 2),
                                 icon: 'info',
                                 confirmButtonText: 'OK'
                             });
